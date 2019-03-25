@@ -1,0 +1,16 @@
+[package]
+name = "usb-test"
+version = "0.1.0"
+authors = ["disasm"]
+edition = "2018"
+
+[dependencies]
+cortex-m-rt = "0.6.7"
+panic-semihosting = "0.5.1"
+stm32f1xx-hal = { version = "0.1.1", features = ["stm32f103", "rt"] }
+usb-device = { version = "0.2.0", features = [] }
+stm32f103xx-usb = "*"
+
+[build-dependencies]
+#usb-device = { version = "0.2.0", features = ["std"] }
+usb-device-generator = "*"
