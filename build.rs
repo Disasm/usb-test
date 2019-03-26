@@ -29,7 +29,8 @@ fn build_device(out_dir: &PathBuf) {
     let mut allocator = DeviceAllocator::new();
     let d = create_cdc_device(&mut allocator);
     let config = d.build();
-    generate_file(out_dir.join("generated.rs"), config).unwrap();
+    let device_config = allocator.into();
+    generate_file(out_dir.join("generated.rs"), config, device_config).unwrap();
 }
 
 fn main() {
