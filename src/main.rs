@@ -39,7 +39,7 @@ fn main() -> ! {
 
     let mut serial = cdc_acm::SerialPort::new(&usb_bus);
 
-    let mut usb_dev = UsbDevice::new(&usb_bus, _gen_device);
+    let mut usb_dev: UsbDevice<'_, _, generated::GeneratedDevice> = UsbDevice::new(&usb_bus);
 
     usb_dev.force_reset().expect("reset failed");
 
