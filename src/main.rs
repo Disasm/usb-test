@@ -8,9 +8,8 @@ extern crate panic_semihosting;
 use cortex_m_rt::entry;
 use stm32f1xx_hal::{prelude::*, stm32};
 
-use usb_device::prelude::*;
 use stm32f103xx_usb::UsbBus;
-use usb_device::device::CustomStringDescriptorProvider;
+use usb_device::device::{CustomStringDescriptorProvider, UsbDevice};
 
 mod cdc_acm;
 
@@ -43,12 +42,7 @@ fn main() -> ! {
 
     let mut serial = cdc_acm::SerialPort::new(&usb_bus);
 
-    let mut usb_dev = UsbDeviceBuilder::new(&usb_bus, UsbVidPid(0x5824, 0x27dd))
-        .manufacturer("Fake company")
-        .product("Serial port")
-        .serial_number("TEST")
-        .device_class(cdc_acm::USB_CLASS_CDC)
-        .build();
+    let mut usb_dev = UsbDevice::new(&usb_bus, _gen_device);
 
     usb_dev.force_reset().expect("reset failed");
 
