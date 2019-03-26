@@ -9,15 +9,12 @@ use cortex_m_rt::entry;
 use stm32f1xx_hal::{prelude::*, stm32};
 
 use stm32f103xx_usb::UsbBus;
-use usb_device::device::{CustomStringDescriptorProvider, UsbDevice};
+use usb_device::device::UsbDevice;
 
 mod cdc_acm;
 
 
 include!(concat!(env!("OUT_DIR"), "/generated.rs"));
-
-impl<B: ::usb_device::bus::UsbBus> CustomStringDescriptorProvider<B> for generated::GeneratedDevice {
-}
 
 #[entry]
 fn main() -> ! {
