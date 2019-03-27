@@ -4,7 +4,7 @@ use std::io::Write;
 use std::path::PathBuf;
 use usb_device_generator::{UsbDirection, EndpointType};
 use usb_device_generator::builder::{EndpointBuilder, DeviceBuilder, UsbVidPid};
-use usb_device_generator::generator::{generate_file, DeviceEndpoint};
+use usb_device_generator::generator::generate_file;
 use usb_device_generator::cdc::{USB_CLASS_CDC, create_cdc_function};
 use usb_device_generator::endpoint::{DeviceAllocator, EndpointBuilderEx, DeviceBuilderEx};
 
@@ -17,9 +17,9 @@ fn create_cdc_device(allocator: &mut DeviceAllocator) -> DeviceBuilder {
         .device_class(USB_CLASS_CDC)
         .allocate(allocator);
 
-    let comm_ep: DeviceEndpoint = EndpointBuilder::new().direction(UsbDirection::In).ep_type(EndpointType::Interrupt).max_packet_size(8).interval(255).allocate(allocator).into();
-    let read_ep: DeviceEndpoint = EndpointBuilder::new().direction(UsbDirection::Out).ep_type(EndpointType::Bulk).max_packet_size(64).allocate(allocator).into();
-    let write_ep: DeviceEndpoint = EndpointBuilder::new().direction(UsbDirection::In).ep_type(EndpointType::Bulk).max_packet_size(64).allocate(allocator).into();
+    let comm_ep = EndpointBuilder::new().direction(UsbDirection::In).ep_type(EndpointType::Interrupt).max_packet_size(8).interval(255).allocate(allocator);
+    let read_ep = EndpointBuilder::new().direction(UsbDirection::Out).ep_type(EndpointType::Bulk).max_packet_size(64).allocate(allocator);
+    let write_ep = EndpointBuilder::new().direction(UsbDirection::In).ep_type(EndpointType::Bulk).max_packet_size(64).allocate(allocator);
 
     create_cdc_function(&mut device, comm_ep, read_ep, write_ep);
     device
